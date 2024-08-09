@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<style>
+    .typewriter {
+    border-right: 2px solid #333; /* The cursor */
+    white-space: nowrap;
+    font-family: monospace;
+    overflow: hidden;
+    display: inline-block;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #333; }
+}
+
+</style>
+<body>
+    <div class="flex flex-col min-h-screen bg-background">
+        <header class="bg-gray-100 py-4">
+          <div class="container mx-auto flex justify-between items-center px-4 sm:px-6 md:px-8">
+            <div class="flex items-center gap-4">
+              <span class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10">
+                <img class="aspect-square h-full w-full" alt="@shadcn" src="https://www.pngitem.com/pimgs/m/593-5935968_omegle-icon-hd-png-download.png" />
+              </span>
+              <div class="space-y-1">
+                <div class="text-lg font-bold"><%=user.fullName%></div>
+                <div class="text-sm text-muted-foreground"><%=user.email%></div>
+              </div>
+            </div>
+            <div class="buttons">
+                <a
+              href="/chat"
+              class="inline-flex h-10 items-center justify-center rounded-md bg-black px-6 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            >
+              Join Chat
+            </a>
+            <a
+            href="/logout"
+            class="inline-flex h-10 items-center justify-center rounded-md bg-red-500 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+          >
+            Logout
+          </a>
+            </div>
+            
+          </div>
+        </header>
+        <main class="flex-1 flex flex-col items-center justify-center gap-6 px-4 sm:px-6 md:px-8">
+            <div class="grid gap-2 text-center">
+                <div class="text-sm text-muted-foreground typewriter" id="typewriter1"></div>
+                <div class="text-sm text-muted-foreground typewriter" id="typewriter2"></div>
+            </div>
+            
+        </main>
+        <footer class="bg-muted py-4">
+          <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 sm:px-6 md:px-8">
+            <div class="flex flex-col items-center justify-center">
+              <div class="text-sm text-muted-foreground">Advertisement</div>
+              <div class="w-[300px] h-[250px] bg-gray-300 rounded-md">
+                <img
+                    src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                    
+                    alt="Ad 2"
+                    class="rounded-lg mb-4 w-full h-full  object-cover"
+                  />
+              </div>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                <div class="text-sm text-muted-foreground">Advertisement</div>
+                <div class="w-[300px] h-[250px] bg-gray-300 rounded-md">
+                    <img
+                    src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                    
+                    alt="Ad 2"
+                    class="rounded-lg mb-4 w-full h-full  object-cover"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <div class="text-sm text-muted-foreground">Advertisement</div>
+                <div class="w-[300px] h-[250px] bg-gray-300 rounded-md">
+                    <img
+                    src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                    
+                    alt="Ad 2"
+                    class="rounded-lg mb-4 w-full h-full  object-cover"
+                  />
+                </div>
+              </div>
+            
+          </div>
+        </footer>
+        <footer class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-background">
+            <p class="text-xs text-muted-foreground">© 2024 Designed And Developed By Pratham Poudel</p>
+            <nav class="sm:ml-auto flex gap-4 sm:gap-6">
+                <a href="https://github.com/pratham-poudel" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.facebook.com/prathampoudel12" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/pratham-poudel-4b12632b2/" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.instagram.com/prathampoudel/" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </nav>
+        </footer>
+        
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    typeWriterEffect("typewriter1", "Welcome back, <%=user.fullName%>! We're excited to have you here.", 100);
+    setTimeout(function() {
+        typeWriterEffect("typewriter2", "Feel free to explore our features and connect with others.", 100);
+    }, 5000); // Delay second line by 5 seconds to allow the first one to finish
+});
+
+function typeWriterEffect(elementId, text, speed) {
+    let i = 0;
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById(elementId).innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+        }
+    }
+    typeWriter();
+}
+
+      </script>
+</body>
+</html>

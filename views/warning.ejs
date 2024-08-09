@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warning - Video Chat Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Dark background */
+            color: #ffffff; /* White text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            
+        }
+
+        .logo-container img {
+            width: 100vw; /* Adjust the size of the logo */
+            height: 35vh;
+        }
+
+        h1 {
+            font-size: 50px;
+            color: #ffffff; /* White color for heading */
+            font-family: monospace;
+        }
+
+        p {
+            font-size: 18px;
+            color: #d3d3d3; /* Light gray for paragraph text */
+        }
+
+        .proceed-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #1e90ff; /* DodgerBlue for button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .proceed-button:hover {
+            background-color: #0f75cc; /* Darker blue on hover */
+        }
+
+        footer {
+            background-color: #000000; /* Black footer */
+            color: #d3d3d3; /* Light gray text */
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer a {
+            color: #1e90ff; /* DodgerBlue for links */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="/images/Black and Beige Minimalist Aesthetic Modern Simple Typography Agency Logo (2).png" alt="Warning"> <!-- Replace 'warning-icon.png' with the path to your logo -->
+        </div>
+        <h1>Hey, Welcome</h1>
+        <p>Please use this platform responsibly. Be kind, make friends, and enjoy your conversations.</p>
+        <p>Any form of vulgar behavior is strictly prohibited and will result in a ban.</p>
+        <button class="proceed-button" onclick="proceedToWebsite()">Proceed to Website</button>
+    </div>
+
+    <footer>
+        &copy; Designed and Developed By Pratham Poudel | 
+        <a href="https://www.instagram.com/prathampoudel" target="_blank">Instagram</a> | 
+        <a href="https://github.com/pratham-poudel" target="_blank">GitHub</a>
+    </footer>
+    
+
+    <script>
+        function proceedToWebsite() {
+            window.location.href = "/welcome"; // Change this to your website's home page URL
+        }
+    </script>
+</body>
+</html>
