@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
 
 
 app.use(logger('dev'));
-app.set("trust proxy", 1);
+app.set("trust proxy",1);
 
 app.set('view engine', 'ejs');
 app.use(cookieParser());
