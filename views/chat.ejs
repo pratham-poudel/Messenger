@@ -120,9 +120,8 @@
         </div>
         <main class="flex-1 p-4 overflow-y-auto relative" id="message-container">
             <div
-                class="text-zinc-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 text-center nobody">
-                bhagwaan kasam koi nahi hai yaha, ruko shaayad koi
-                aajaye.</div>
+                class="text-black-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 text-center nobody">
+                No One is here , pls wait until we connect you with a partner, You will connected Sortly....</div>
         </main>
         <form id="chatform" class="bg-white p-4 flex">
             <input type="hidden" id="userid" value="">
@@ -153,7 +152,23 @@
     room = data;
     document.querySelector(".nobody").classList.add("hidden");
     document.querySelector(".information").textContent = "Connected to  " + room;
+    document.querySelector(".videocall").classList.remove("hidden");
 });
+socket.on("userDisconnected", function (data) {
+    if (data.userId !== socket.id) {
+        alert("The other user has disconnected. We will connect you to a new user.");
+        setTimeout(function() {
+            location.reload(); // Refresh the page
+        }, 2000); // 2 seconds delay
+    }
+});
+
+
+window.addEventListener('beforeunload', function () {
+    socket.emit('disconnecting'); // Notify server before unloading the page
+});
+
+
 
             socket.on("message", function (message) {
                 receiveMessage(message);

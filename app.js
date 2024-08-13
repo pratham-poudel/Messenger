@@ -44,15 +44,17 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on("disconnect", function(){
-        // Remove socket from waiting users
+    socket.on("disconnect", function() {
+        if (socket.roomname) {
+            socket.to(socket.roomname).emit('userDisconnected', { userId: socket.id });
+        }
         waitingusers = waitingusers.filter(user => user.socket.id !== socket.id);
-
-        // Leave any joined rooms
         if (socket.roomname) {
             socket.leave(socket.roomname);
         }
     });
+    
+    
 
     socket.on("message", function(data){
         console.log(data);
