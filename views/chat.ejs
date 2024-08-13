@@ -18,9 +18,11 @@
             height: 100vh;
             overflow: hidden;
         }
+      
 
         .video-player {
             background-color: black;
+            /* transform: scaleX(-1); */
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -47,7 +49,6 @@
 
         .control-container {
             background-color: #ffffff;
-            
             height: 80px;
             width: 80px;
             border-radius: 50%;
@@ -96,6 +97,46 @@
                             fill="white" />
                     </svg>
                 </div> -->
+                <div class="control-container" id="toggleCamera">
+                    <svg id='Camera_Settings_Flip_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+
+
+                        <g transform="matrix(0.83 0 0 0.83 12 12)" >
+                        <g style="" >
+                        <g transform="matrix(1 0 0 1 5.25 0.31)" >
+                        <path style="stroke: rgb(0,48,62); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-17.25, -12.31)" d="M 15.552 2.119 C 20.35463882213237 3.845382784613891 23.22043450652252 8.775047413523508 22.344203830616053 13.802766277726708 C 21.467973154709586 18.830485141929906 17.103502441594543 22.50005918431589 12.000000000000004 22.5" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 5.54 -8.55)" >
+                        <polyline style="stroke: rgb(0,48,62); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" points="-0.01,2.03 -1.98,-1.33 1.98,-2.03 " />
+                        </g>
+                        <g transform="matrix(1 0 0 1 -5.25 -0.31)" >
+                        <path style="stroke: rgb(0,48,62); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.75, -11.69)" d="M 8.448 21.881 C 3.645361177867631 20.154617215386107 0.7795654934774783 15.22495258647648 1.6557961693839491 10.197233722273282 C 2.53202684529042 5.169514858070084 6.896497558405459 1.4999408156841056 11.999999999999998 1.5" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 -5.54 8.55)" >
+                        <polyline style="stroke: rgb(0,48,62); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" points="0.01,-2.03 1.99,1.34 -1.99,2.03 " />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.5 0)" >
+                        <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(159,234,255); fill-rule: nonzero; opacity: 1;" transform=" translate(-12.5, -12)" d="M 18.5 15.5 C 18.5 16.052284749830793 18.052284749830793 16.5 17.5 16.5 L 7.5 16.5 C 6.947715250169207 16.5 6.5 16.052284749830793 6.5 15.5 L 6.5 9.5 C 6.5 8.947715250169207 6.947715250169207 8.5 7.5 8.5 L 10 8.5 L 10.223 8.053 C 10.392263542687765 7.714270588465138 10.738334289603905 7.500202218169136 11.117 7.500000000000001 L 13.881 7.500000000000001 C 14.259665710396096 7.500202218169136 14.605736457312236 7.714270588465138 14.775 8.053 L 15 8.5 L 17.5 8.5 C 18.052284749830793 8.5 18.5 8.947715250169207 18.5 9.5 Z" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.5 0.5)" >
+                        <circle style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(159,234,255); fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="2" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.5 -2.5)" >
+                        <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(159,234,255); fill-rule: nonzero; opacity: 1;" transform=" translate(-12.5, -9.5)" d="M 17.5 8.5 L 15 8.5 L 14.775 8.053 C 14.605736457312235 7.714270588465138 14.259665710396096 7.500202218169136 13.881 7.500000000000001 L 11.117 7.500000000000001 C 10.738334289603905 7.500202218169136 10.392263542687765 7.714270588465138 10.223 8.053 L 10 8.5 L 7.5 8.5 C 6.947715250169207 8.5 6.5 8.947715250169207 6.5 9.5 L 6.5 11.5 C 6.5 10.947715250169207 6.947715250169207 10.5 7.5 10.5 L 10 10.5 L 10.223 10.053 C 10.392263542687765 9.714270588465137 10.738334289603905 9.500202218169136 11.117 9.5 L 13.881 9.5 C 14.259665710396096 9.500202218169136 14.605736457312235 9.714270588465137 14.775 10.053 L 15 10.5 L 17.5 10.5 C 18.052284749830793 10.5 18.5 10.947715250169207 18.5 11.5 L 18.5 9.5 C 18.5 8.947715250169207 18.052284749830793 8.5 17.5 8.5 Z" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.5 0)" >
+                        <path style="stroke: rgb(0,48,62); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-12.5, -12)" d="M 18.5 15.5 C 18.5 16.052284749830793 18.052284749830793 16.5 17.5 16.5 L 7.5 16.5 C 6.947715250169207 16.5 6.5 16.052284749830793 6.5 15.5 L 6.5 9.5 C 6.5 8.947715250169207 6.947715250169207 8.5 7.5 8.5 L 10 8.5 L 10.223 8.053 C 10.392263542687765 7.714270588465138 10.738334289603905 7.500202218169136 11.117 7.500000000000001 L 13.881 7.500000000000001 C 14.259665710396096 7.500202218169136 14.605736457312236 7.714270588465138 14.775 8.053 L 15 8.5 L 17.5 8.5 C 18.052284749830793 8.5 18.5 8.947715250169207 18.5 9.5 Z" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.22 0.22)" >
+                        <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(223,249,255); fill-rule: nonzero; opacity: 1;" transform=" translate(-12.22, -12.22)" d="M 11.086 13.914 C 10.328055580983824 13.129242226071376 10.33889525220584 11.881830445957787 11.110362849081813 11.110362849081813 C 11.881830445957785 10.33889525220584 13.129242226071376 10.328055580983824 13.914 11.086 Z" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.5 0.5)" >
+                        <circle style="stroke: rgb(0,48,62); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="2" />
+                        </g>
+                        </g>
+                        </g>
+                        </svg>
+                </div>
 
                 <div class="control-container" id="hangup">
                     <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><defs><style>.cls-1{fill:#ff3b30;fill-rule:evenodd;}</style></defs><title>end-call</title><path class="cls-1" d="M104.89,104.89a61.47,61.47,0,1,1,18-43.45,61.21,61.21,0,0,1-18,43.45ZM74.59,55.72a49.79,49.79,0,0,0-12.38-2.07A41.52,41.52,0,0,0,48,55.8a1.16,1.16,0,0,0-.74.67,4.53,4.53,0,0,0-.27,1.7,16.14,16.14,0,0,0,.2,2c.42,3,.93,6.8-2.42,8l-.22.07-12,3.24-.12,0A4.85,4.85,0,0,1,28,70a11.44,11.44,0,0,1-2.68-4.92,11,11,0,0,1,.42-6.93A23.69,23.69,0,0,1,29,52.39,21.52,21.52,0,0,1,36.55,46a42.74,42.74,0,0,1,10.33-3.6l.29-.07C49,42,51,41.48,53.08,41.17a62.76,62.76,0,0,1,25.14,1.59c6.87,2,13,5.43,16.8,10.7a13.88,13.88,0,0,1,2.92,9.59,12.64,12.64,0,0,1-4.88,8.43,1.34,1.34,0,0,1-1.26.28L78.6,68.38A3.69,3.69,0,0,1,75.41,66a7.73,7.73,0,0,1-.22-4,15.21,15.21,0,0,1,.22-1.6c.3-1.89.63-4.06-.89-4.72Z"/></svg>
@@ -392,6 +433,41 @@ window.addEventListener('beforeunload', function () {
                     inCall = false;
                 }
             }
+            let isFrontCamera = true;
+
+document.querySelector("#toggleCamera").addEventListener("click", async function() {
+    isFrontCamera = !isFrontCamera;
+    await switchCamera();
+});
+
+async function switchCamera() {
+    const videoConstraints = {
+        video: {
+            facingMode: isFrontCamera ? 'user' : 'environment'
+        },
+        audio: true
+    };
+
+    // Stop all current tracks before switching cameras
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+    }
+
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
+        document.querySelector("#localVideo").srcObject = localStream;
+
+        // Replace the video track in the peer connection if in call
+        if (inCall && peerConnection) {
+            const videoTrack = localStream.getVideoTracks()[0];
+            const sender = peerConnection.getSenders().find(s => s.track.kind === videoTrack.kind);
+            sender.replaceTrack(videoTrack);
+        }
+    } catch (err) {
+        console.log("Error switching camera: ", err);
+    }
+}
+
         </script>
 </body>
 
