@@ -11,6 +11,20 @@
 
 <body class="bg-gray-100 text-gray-900">
 
+    <!-- Full-page notice -->
+    <div id="notice" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg max-w-lg text-center shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Important Notice</h2>
+            <p class="mb-6 text-gray-700">
+                Since our hostel net does not offer smooth peer-to-peer connection, for video chat to work smoothly, please use mobile data.
+            </p>
+            <button onclick="closeNotice()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
     <nav class="bg-gray-200 py-4">
         <div class="container mx-auto flex justify-between items-center px-4 md:px-6">
             <div class="flex items-center space-x-4">
@@ -22,7 +36,7 @@
                 </div>
             </div>
             <div class="space-x-4 hidden md:flex">
-                <a href="https://www.instagram.com/prathampoudel/" target="_blank" 
+                <a href="https://www.instagram.com/prathampoudel/" target="_blank"
                    class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">
                    Contact Me
                 </a>
@@ -130,7 +144,7 @@
                 <a href="https://www.facebook.com/prathampoudel12" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="tel:+1234567890" class="text-xl hover:text-gray-400">
+                <a href="tel:7268921671" class="text-xl hover:text-gray-400">
                     <i class="fas fa-phone"></i>
                 </a>
                 <a href="https://www.linkedin.com/in/pratham-poudel-4b12632b2/" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
@@ -142,6 +156,12 @@
             </nav>
         </div>
     </footer>
+
+    <script>
+        function closeNotice() {
+            document.getElementById('notice').style.display = 'none';
+        }
+    </script>
 
 </body>
 
