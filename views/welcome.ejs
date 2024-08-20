@@ -1,196 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Thaparmegle</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
-<style>
-    .navbar{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        height: 10vh;
-        background-color: #eaeaea;
-    }
-    .ad{
-        
-        height: 10vh;
-        width: 100vw;
-        
-    }
-    marquee{
-        font-size: 50px;
-        font-family: monospace;
-    }
-    .buttons{
-        display: flex;
-        
-    }
-    .ad1{
-        
-        height: 10vh;
-        width: 100vw;
-        
-    }
-    .marquees{
-        font-size: 50px;
-        font-family: monospace;
-    }
-</style>
-<body>
-   
-        
-          <nav class="navbar">
-            <!-- <div class="logo"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.5A2.493 2.493 0 0 1 7.51 20H7.5a2.468 2.468 0 0 1-2.4-3.154 2.98 2.98 0 0 1-.85-5.274 2.468 2.468 0 0 1 .92-3.182 2.477 2.477 0 0 1 1.876-3.344 2.5 2.5 0 0 1 3.41-1.856A2.5 2.5 0 0 1 12 5.5m0 13v-13m0 13a2.493 2.493 0 0 0 4.49 1.5h.01a2.468 2.468 0 0 0 2.403-3.154 2.98 2.98 0 0 0 .847-5.274 2.468 2.468 0 0 0-.921-3.182 2.477 2.477 0 0 0-1.875-3.344A2.5 2.5 0 0 0 14.5 3 2.5 2.5 0 0 0 12 5.5m-8 5a2.5 2.5 0 0 1 3.48-2.3m-.28 8.551a3 3 0 0 1-2.953-5.185M20 10.5a2.5 2.5 0 0 0-3.481-2.3m.28 8.551a3 3 0 0 0 2.954-5.185"/>
-              </svg>
-              </div> -->
-            <div class="ad">
-                <marquee behavior="scroll" direction="left"   scrollamount="20" class="marquee w-full">
-                    For Advertisement mail us at prathampoudel2@gmail.com 
-                  </marquee>
-                  
+
+<body class="bg-gray-100 text-gray-900">
+
+    <nav class="bg-gray-200 py-4">
+        <div class="container mx-auto flex justify-between items-center px-4 md:px-6">
+            <div class="flex items-center space-x-4">
+                <!-- Logo can be added here if needed -->
+                <div class="ad w-full">
+                    <marquee behavior="scroll" direction="left" scrollamount="20" class="text-xl font-mono">
+                        For Advertisement mail us at prathampoudel2@gmail.com
+                    </marquee>
+                </div>
             </div>
-            <!-- <div class="buttons">
-                <span> <button class="whitespace-nowrap ring-offset-background focus-visible:ring-offset-2 bg-background py-2 inline-flex h-10 items-center justify-center rounded-md border border-white px-8 text-sm font-medium text-black shadow-sm transition-colors hover:bg-pink-800 hover:text-black focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+            <div class="space-x-4 hidden md:flex">
+                <a href="https://www.instagram.com/prathampoudel/" target="_blank" 
+                   class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">
                    Contact Me
-                  </button></span>
-                <span><button class="whitespace-nowrap ring-offset-background focus-visible:ring-offset-2 py-2 inline-flex h-10 items-center justify-center rounded-md bg-blue-600 text-white px-8 text-sm font-medium shadow transition-colors hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                    Login
-                  </button></span>
-                <span> <button class="whitespace-nowrap ring-offset-background focus-visible:ring-offset-2 bg-background py-2 inline-flex h-10 items-center justify-center rounded-md border border-white px-8 text-sm font-medium text-black shadow-sm transition-colors hover:bg-pink-800 hover:text-black focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                    Signup
-                  </button></span>
-            </div> -->
-          </nav>
-        
-        
-        <main class="flex-1">
-          <section class="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-r from-primary to-primary/80">
-            <div class="container px-4 md:px-6 text-primary-foreground">
-              <div class="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-                <div class="flex flex-col justify-center space-y-4">
-                  <div class="space-y-2">
-                    <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                        Welcome  to 
-                      </h1>
-                    <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                       Thaparmegle - Connecting Thapar Students
-                    </h1>
-                     
-                    <p class="max-w-[600px] text-primary-foreground/80 md:text-xl">
-                      Thaparmegle is a video and chat platform exclusively for Thapar University students, enabling
-                      seamless communication and collaboration.
-                    </p>
-                  </div>
-                  <div class="flex flex-col gap-2 min-[400px]:flex-row">
-                    <a href="/login"><button  class="whitespace-nowrap ring-offset-background focus-visible:ring-offset-2 py-2 inline-flex h-10 items-center justify-center rounded-md bg-blue-600 text-white px-8 text-sm font-medium shadow transition-colors hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                      Login
-                    </button></a>
-                   <a href="/signup"> <button class="whitespace-nowrap ring-offset-background focus-visible:ring-offset-2 bg-background py-2 inline-flex h-10 items-center justify-center rounded-md border border-white px-8 text-sm font-medium text-black shadow-sm transition-colors hover:bg-pink-800 hover:text-black focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                      Signup
-                    </button></a>
-                  </div>
-                </div>
-                <img
-                  src="https://images.unsplash.com/photo-1604881989793-466aca8dd319?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  width="550"
-                  height="550"
-                  alt="Hero"
-                  style=""
-                  class="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
-                />
-              </div>
+                </a>
+                <a href="/login"
+                   class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                   Login
+                </a>
+                <a href="/signup"
+                   class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">
+                   Signup
+                </a>
             </div>
-          </section>
-          <div class="ad1">
-            <marquee behavior="scroll" direction="left"   scrollamount="20" class="marquees w-full">
-              For Advertisement mail us at prathampoudel2@gmail.com
-              </marquee>
         </div>
-          <section class="w-full py-12 md:py-24 lg:py-32 bg-background">
-            <div class="container px-4 md:px-6">
-              <div class="flex flex-col items-center justify-center space-y-4 text-center">
-                <div class="space-y-2">
-                  <div class="inline-block rounded-lg bg-muted px-3 py-1 text-sm text-primary">University Ads</div>
-                  <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-foreground">
-                    Discover Campus Opportunities
-                  </h2>
-                  <p class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Stay up-to-date with the latest events, activities, and opportunities happening around the Thapar
-                    campus.
-                  </p>
+    </nav>
+
+    <main class="flex-1">
+        <section class="bg-gradient-to-r from-blue-500 to-blue-300 text-white py-12 md:py-24 lg:py-32">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <h1 class="text-4xl font-bold leading-tight md:text-5xl">
+                            Welcome to <br>
+                            <span class="text-blue-100">Thaparmegle - Connecting Thapar Students</span>
+                        </h1>
+                        <p class="text-lg md:text-xl max-w-lg">
+                            Thaparmegle is a video and chat platform exclusively for Thapar University students, enabling
+                            seamless communication and collaboration.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="/login">
+                                <button class="bg-blue-600 text-white px-8 py-2 rounded-md shadow hover:bg-blue-700 transition">
+                                    Login
+                                </button>
+                            </a>
+                            <a href="/signup">
+                                <button class="bg-gray-800 text-white px-8 py-2 rounded-md shadow hover:bg-gray-700 transition">
+                                    Signup
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1604881989793-466aca8dd319?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="Hero Image" class="rounded-xl shadow-lg object-cover w-full h-72 md:h-96">
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div class="bg-muted rounded-lg p-4 text-left">
-                    <img
-                      src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
-                      width="300"
-                      height="200"
-                      alt="Ad 1"
-                      style=""
-                      class="rounded-lg mb-4 w-full aspect-[3/2] object-cover"
-                    />
-                    <h3 class="text-lg font-bold text-foreground">Hackathon: Innovate for the Future</h3>
-                    <p class="text-muted-foreground">
-                      Join our 24-hour hackathon and showcase your coding skills. Attractive prizes await the winners.
-                    </p>
-                  </div>
-                  <div class="bg-muted rounded-lg p-4 text-left">
-                    <img
-                      src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
-                      width="300"
-                      height="200"
-                      alt="Ad 2"
-                      class="rounded-lg mb-4 w-full aspect-[3/2] object-cover"
-                    />
-                    <h3 class="text-lg font-bold text-foreground">Entrepreneurship Workshop</h3>
-                    <p class="text-muted-foreground">
-                      Learn the fundamentals of starting a successful business from industry experts.
-                    </p>
-                  </div>
-                  <div class="bg-muted rounded-lg p-4 text-left">
-                    <img
-                      src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
-                      width="300"
-                      height="200"
-                      alt="Ad 3"
-                      class="rounded-lg mb-4 w-full aspect-[3/2] object-cover"
-                    />
-                    <h3 class="text-lg font-bold text-foreground">Cultural Fest: Celebrate Diversity</h3>
-                    <p class="text-muted-foreground">Join us for a vibrant celebration of Thapar's rich cultural</p>
-                  </div>
-                </div>
-              </div>
             </div>
-          </section>
-        </main>
-        <footer class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-background">
-          <p class="text-xs text-muted-foreground">© 2024 Designed And Developed By Pratham Poudel</p>
-          <nav class="sm:ml-auto flex gap-4 sm:gap-6">
-              <a href="https://github.com/pratham-poudel" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-github"></i>
-              </a>
-              <a href="https://www.facebook.com/prathampoudel12" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
-                  <i class="fas fa-phone"></i>
-              </a>
-              <a href="https://www.linkedin.com/in/pratham-poudel-4b12632b2/" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="https://www.instagram.com/prathampoudel/" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-instagram"></i>
-              </a>
-          </nav>
-      </footer>
-      
-        
-      </div>
+        </section>
+
+        <div class="bg-gray-200 py-4">
+            <marquee behavior="scroll" direction="left" scrollamount="20" class="text-xl font-mono">
+                For Advertisement mail us at prathampoudel2@gmail.com
+            </marquee>
+        </div>
+
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center">
+                    <div class="inline-block bg-gray-200 text-gray-700 px-4 py-1 rounded-lg text-sm">
+                        University Ads
+                    </div>
+                    <h2 class="text-3xl font-bold mt-4 mb-6">Discover Campus Opportunities</h2>
+                    <p class="text-lg max-w-3xl mx-auto">
+                        Stay up-to-date with the latest events, activities, and opportunities happening around the Thapar
+                        campus.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-gray-100 rounded-lg p-4 shadow-lg">
+                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                             alt="Hackathon" class="w-full h-32 object-cover rounded-md mb-4">
+                        <h3 class="text-lg font-bold">Hackathon: Innovate for the Future</h3>
+                        <p class="text-gray-600">
+                            Join our 24-hour hackathon and showcase your coding skills. Attractive prizes await the winners.
+                        </p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-4 shadow-lg">
+                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                             alt="Workshop" class="w-full h-32 object-cover rounded-md mb-4">
+                        <h3 class="text-lg font-bold">Entrepreneurship Workshop</h3>
+                        <p class="text-gray-600">
+                            Learn the fundamentals of starting a successful business from industry experts.
+                        </p>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-4 shadow-lg">
+                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                             alt="Cultural Fest" class="w-full h-32 object-cover rounded-md mb-4">
+                        <h3 class="text-lg font-bold">Cultural Fest: Celebrate Diversity</h3>
+                        <p class="text-gray-600">
+                            Join us for a vibrant celebration of Thapar's rich cultural heritage.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-200 py-6">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4 md:px-6">
+            <p class="text-xs">
+                © 2024 Designed And Developed By Pratham Poudel
+            </p>
+            <nav class="flex gap-4 mt-4 sm:mt-0">
+                <a href="https://github.com/pratham-poudel" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.facebook.com/prathampoudel12" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="tel:+1234567890" class="text-xl hover:text-gray-400">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/pratham-poudel-4b12632b2/" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.instagram.com/prathampoudel/" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </nav>
+        </div>
+    </footer>
+
 </body>
+
 </html>

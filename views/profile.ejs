@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,177 +9,161 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .typewriter {
-            border-right: 2px solid #333; /* The cursor */
+            border-right: 2px solid #333;
             white-space: nowrap;
             font-family: monospace;
             overflow: hidden;
             display: inline-block;
             animation: blink-caret 0.75s step-end infinite;
         }
-        .typewriterwaladiv {
-            margin-top: 50%;
-            margin-bottom: 80%;
-        }
+
         @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #333; }
+            from, to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: #333;
+            }
         }
-        /* Fullscreen Popup Styles */
+
         .fullscreen-popup {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.7);
             color: #fff;
-            display: none; /* Hidden by default */
+            display: none;
             align-items: center;
             justify-content: center;
             text-align: center;
-            z-index: 1000; /* Ensure it's on top of other content */
+            z-index: 1000;
             padding: 20px;
         }
+
         .fullscreen-popup.show {
-            display: flex; /* Use flex to center content */
+            display: flex;
         }
+
         .fullscreen-popup .popup-content {
-            
             padding: 20px;
             border-radius: 10px;
+            background-color: #333;
             position: relative;
         }
+
         .fullscreen-popup .close-btn {
-          height: 49px;
-    display: inline-block;
-    background-color: #f5f5dc;
-    color: #333;
-    border: none;
-    /* padding: 14px 56px; */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 22px;
-    margin-top: 20px;
-    width: 125px;
+            background-color: #f5f5dc;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            padding: 10px 20px;
         }
+
         .fullscreen-popup p {
             font-size: 18px;
             margin: 0;
         }
     </style>
 </head>
-<body>
-    <div class="flex flex-col min-h-screen bg-background">
-        <header class="bg-gray-100 py-4">
-            <div class="container mx-auto flex justify-between items-center px-4 sm:px-6 md:px-8">
-                <div class="flex items-center gap-4">
-                    <span class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10">
-                        <img class="aspect-square h-full w-full" alt="@shadcn" src="https://www.pngitem.com/pimgs/m/593-5935968_omegle-icon-hd-png-download.png" />
-                    </span>
-                    <div class="space-y-1">
-                        <div class="text-lg font-bold"><%=user.fullName%></div>
-                        <div class="text-sm text-muted-foreground"><%=user.email%></div>
+
+<body class="bg-gray-100 text-gray-900">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-gray-800 text-white py-4">
+            <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 md:px-8">
+                <div class="flex items-center gap-4 mb-4 sm:mb-0">
+                    <img class="h-10 w-10 rounded-full object-cover" alt="@shadcn"
+                        src="https://www.pngitem.com/pimgs/m/593-5935968_omegle-icon-hd-png-download.png" />
+                    <div>
+                        <div class="text-lg font-semibold"><%= user.fullName %></div>
+                        <div class="text-sm text-gray-400"><%= user.email %></div>
                     </div>
                 </div>
-                <div class="buttons">
-                    <a href="/chat" class="inline-flex h-10 items-center justify-center rounded-md bg-black px-6 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                    <a href="/chat"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition">
                         Join Chat
                     </a>
-                    <a href="/logout" class="inline-flex h-10 items-center justify-center rounded-md bg-red-500 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                    <a href="/logout"
+                        class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-md shadow hover:bg-red-700 transition">
                         Logout
                     </a>
                 </div>
             </div>
         </header>
-        <main class="flex-1 flex flex-col items-center justify-center gap-6 px-4 sm:px-6 md:px-8">
-            <div class="typewriterwaladiv grid gap-2 text-center">
-                <div class="text-sm text-muted-foreground typewriter" id="typewriter1"></div>
-                <div class="text-sm text-muted-foreground typewriter" id="typewriter2"></div>
+        <main class="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8">
+            <div class="text-center space-y-4">
+                <div class="text-2xl font-bold typewriter" id="typewriter1">Welcome to Thaparmegle</div>
+                <div class="text-lg text-gray-600 typewriter" id="typewriter2">Connect with your friends instantly!</div>
+                <div id="userCount" class="text-lg font-semibold mt-4">Total Online Users: 0</div>
             </div>
         </main>
-        <footer class="bg-muted py-4">
+        <footer class="bg-gray-200 py-4">
             <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 sm:px-6 md:px-8">
-                <div class="flex flex-col items-center justify-center">
-                    <div class="text-sm text-muted-foreground">Advertisement</div>
-                    <div class="w-[300px] h-[250px] bg-gray-300 rounded-md">
-                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg" alt="Ad 2" class="rounded-lg mb-4 w-full h-full object-cover" />
+                <div class="flex flex-col items-center">
+                    <div class="text-sm text-gray-500">Advertisement</div>
+                    <div class="w-64 h-40 bg-gray-300 rounded-md overflow-hidden">
+                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                            alt="Ad 1" class="w-full h-full object-cover" />
                     </div>
                 </div>
-                <div class="flex flex-col items-center justify-center">
-                    <div class="text-sm text-muted-foreground">Advertisement</div>
-                    <div class="w-[300px] h-[250px] bg-gray-300 rounded-md">
-                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg" alt="Ad 2" class="rounded-lg mb-4 w-full h-full object-cover" />
+                <div class="flex flex-col items-center">
+                    <div class="text-sm text-gray-500">Advertisement</div>
+                    <div class="w-64 h-40 bg-gray-300 rounded-md overflow-hidden">
+                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                            alt="Ad 2" class="w-full h-full object-cover" />
                     </div>
                 </div>
-                <div class="flex flex-col items-center justify-center">
-                    <div class="text-sm text-muted-foreground">Advertisement</div>
-                    <div class="w-[300px] h-[250px] bg-gray-300 rounded-md">
-                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg" alt="Ad 2" class="rounded-lg mb-4 w-full h-full object-cover" />
+                <div class="flex flex-col items-center">
+                    <div class="text-sm text-gray-500">Advertisement</div>
+                    <div class="w-64 h-40 bg-gray-300 rounded-md overflow-hidden">
+                        <img src="https://ih1.redbubble.net/image.4326721277.0235/pp,840x830-pad,1000x1000,f8f8f8.u1.jpg"
+                            alt="Ad 3" class="w-full h-full object-cover" />
                     </div>
                 </div>
             </div>
         </footer>
-        <footer class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-background">
-            <p class="text-xs text-muted-foreground">© 2024 Designed And Developed By Pratham Poudel</p>
-            <nav class="sm:ml-auto flex gap-4 sm:gap-6">
-                <a href="https://github.com/pratham-poudel" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+        <footer class="flex flex-col items-center justify-between py-6 bg-gray-800 text-gray-200 border-t border-gray-600">
+            <p class="text-xs">© 2024 Designed And Developed By Pratham Poudel</p>
+            <nav class="flex gap-4">
+                <a href="https://github.com/pratham-poudel"
+                    class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.facebook.com/prathampoudel12" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/prathampoudel12"
+                    class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="#" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                <a href="#" class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-phone"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/pratham-poudel-4b12632b2/" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/pratham-poudel-4b12632b2/"
+                    class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://www.instagram.com/prathampoudel/" class="text-xl text-muted-foreground hover:underline" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/prathampoudel/"
+                    class="text-xl hover:text-gray-400" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
             </nav>
         </footer>
     </div>
-    
-    <!-- Fullscreen Popup Notice -->
-    <div id="popup" class="fullscreen-popup">
-        <div class="popup-content">
-            <p>Welcome back, <%=user.fullName%>! We're excited to have you here. 
-                Our ICE server may not fully support video chat for users connected to same internet router. If you experience issues, please switch to mobile data. Also, ensure that video and audio permissions are granted.
-                Thank you!</p>
-            <button class="close-btn" onclick="closePopup()">Close</button>
-        </div>
-    </div>
 
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+        integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Show fullscreen popup notice
-            const popup = document.getElementById('popup');
-            popup.classList.add('show');
+        const socket = io(); // Initialize socket connection
 
-            // Typewriter effect
-            typeWriterEffect("typewriter1", "Welcome back, <%=user.fullName%>! We're excited to have you here.", 100);
-            setTimeout(function() {
-                typeWriterEffect("typewriter2", "Feel free to explore our features and connect with others. Have some fun..", 100);
-            }, 5000); // Delay second line by 5 seconds to allow the first one to finish
+        // Listen for the updated user count
+        socket.on("updateUserCount", function (count) {
+            document.getElementById('userCount').textContent = `Total Online Users: ${count}`;
         });
-
-        function typeWriterEffect(elementId, text, speed) {
-            let i = 0;
-            function typeWriter() {
-                if (i < text.length) {
-                    document.getElementById(elementId).innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, speed);
-                }
-            }
-            typeWriter();
-        }
-
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            popup.classList.remove('show');
-        }
     </script>
 </body>
+
 </html>
