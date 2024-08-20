@@ -16,11 +16,18 @@ app.use(expressSession({
 
 const io = socketIO(server);    
 let waitingusers = [];
+let globalCounter = 0;
+
+
+
+
 
 io.on('connection', (socket) => {
     socket.on("joinroom", function(data){
         // Remove the socket from waiting users if it exists, to avoid duplicates
         waitingusers = waitingusers.filter(user => user.socket.id !== socket.id);
+        globalCounter++;
+        console.log("Total Active Users Are :",globalCounter);
 
         if (waitingusers.length > 0) {
             let partnerData = waitingusers.shift();
@@ -45,6 +52,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on("disconnect", function() {
+        globalCounter--;
+        console.log("Total Active Users Are :",globalCounter);
         if (socket.roomname) {
             socket.to(socket.roomname).emit('userDisconnected', { userId: socket.id });
         }
