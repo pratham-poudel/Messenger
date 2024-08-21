@@ -209,7 +209,8 @@
         <main class="flex-1 p-4 overflow-y-auto relative" id="message-container">
             <div
                 class="text-black-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 text-center nobody">
-                No One is here , pls wait until we connect you with a partner, You will be connected Sortly....👋👋👋👋</div>
+                No One is here , pls wait until we connect you with a partner, You will be connected Sortly....👋👋👋👋
+            </div>
         </main>
         <form id="chatform" class="bg-white p-4 flex">
             <input type="hidden" id="userid" value="">
@@ -312,8 +313,18 @@
             let peerConnection;
             let inCall = false;
 
+
+
             const rtcSettings = {
-                iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+                iceServers: [
+                    { urls: "stun:stun.l.google.com:19302" },
+                    {
+                        urls: "turn:relay1.expressturn.com:3478",
+                        username: "efRYECZTLRWUNV9J3S",
+                        credential: "Q5NF8ipsQ6jTkkGj"
+                    }
+                ]
+
             };
 
             const initialize = async () => {
