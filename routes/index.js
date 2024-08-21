@@ -205,5 +205,119 @@ router.post('/login', async function(req, res, next) {
     }
     
   })
+  router.get('/forgetpassword', function(req, res, next) {
+    res.render('forgetpassword');
+  });
+  router.post('/reset-password', async function(req, res, next) {
+   
+      
+      try {
+        let user = await userModel.findOne({email: req.body.email});
+        if (!user) {
+          res.send("Email Not Found In the Database , You could Create a new Account with Email");
+          }
+        else{
+          await sendEmail(user.email, 'Your Email And Password for Thaparmegle', `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Thaparmegle Account Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .header img {
+            width: 150px;
+        }
+
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .content h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #0073e6;
+        }
+
+        .content p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #0073e6;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://ik.imagekit.io/mrigkfqmvc/Black%20and%20Beige%20Minimalist%20Aesthetic%20Modern%20Simple%20Typography%20Agency%20Logo%20(2).png?updatedAt=1724216813136" alt="Thaparmegle">
+        </div>
+        <div class="content">
+            <h1>Welcome to Thaparmegle!</h1>
+            <p>Hi ${user.fullName},</p>
+            <p>Thank you for registering on Thaparmegle. Below are your account details:</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Password:</strong> ${user.password}</p>
+            <a href="https://thaparmegle.com/login" class="button">Login to Thaparmegle</a>
+            <p>If you didn’t request these details, please contact our support team immediately.</p>
+        </div>
+        <div class="footer">
+            <p>Thaparmegle Team</p>
+            <p><a href="https://thaparmegle.com">Visit our website</a></p>
+        </div>
+    </div>
+</body>
+
+</html>
+`);
+res.send("Pls Check Your Email For Password");
+        }
+      } catch (error) {
+        
+      }
+  });
 
 module.exports = router;
