@@ -311,239 +311,229 @@
                 document.querySelector("#message-container").scrollTop = document.querySelector("#message-container").scrollHeight;
             }
 
-            // WEBRTC START
             let localStream;
-            let remoteStream;
-            let peerConnection;
-            let inCall = false;
+let remoteStream;
+let peerConnection;
+let inCall = false;
 
+const rtcSettings = {
+    iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        {
+            urls: "turn:relay1.expressturn.com:3478",
+            username: "efRYECZTLRWUNV9J3S",
+            credential: "Q5NF8ipsQ6jTkkGj"
+        },
+    ]
+};
 
+const initialize = async () => {
+    socket.on("signalingMessage", handleSignalingMessage);
 
-            const rtcSettings = {
-                iceServers: [
-                    { urls: "stun:stun.l.google.com:19302" },
-                    {
-                        urls: "turn:relay1.expressturn.com:3478",
-                        username: "efRYECZTLRWUNV9J3S",
-                        credential: "Q5NF8ipsQ6jTkkGj"
-                    },
-                    
-                ]
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+        });
+        document.querySelector("#localVideo").srcObject = localStream;
+        document.querySelector("#localVideo").style.display = "block";
 
-            };
+        initiateOffer();
 
-            const initialize = async () => {
-                socket.on("signalingMessage", handleSignalingMessage);
+        inCall = true;
+    } catch (err) {
+        console.error("Error getting user media: ", err);
+    }
+}
 
-                try {
-                    localStream = await navigator.mediaDevices.getUserMedia({
-                        audio: true,
-                        video: true
-                    })
-                    document.querySelector("#localVideo").srcObject = localStream;
-                    document.querySelector("#localVideo").style.display = "block";
-
-                    initiateOffer();
-
-                    inCall = true;
-                }
-                catch (err) {
-                    console.log("Rejected by browser" + err);
-                }
-            }
-
-            const initiateOffer = async () => {
-                await createPeerConnection();
-                try {
-                    const offer = await peerConnection.createOffer();
-                    await peerConnection.setLocalDescription(offer);
-                    socket.emit("signalingMessage", {
-                        room,
-                        message: JSON.stringify({
-                            type: "offer",
-                            offer
-                        })
-                    })
-                }
-                catch (err) {
-                    console.log("error in creating offer" + err);
-                }
-            }
-
-            const createPeerConnection = () => {
-                peerConnection = new RTCPeerConnection(rtcSettings);
-
-                remoteStream = new MediaStream();
-
-                document.querySelector("#remoteVideo").srcObject = remoteStream;
-                document.querySelector("#remoteVideo").style.display = "block";
-                document.querySelector("#localVideo").classList.add("smallFrame");
-
-                localStream.getTracks().forEach(track => {
-                    peerConnection.addTrack(track, localStream);
-                })
-
-                peerConnection.ontrack = (event) => {
-                    event.streams[0].getTracks().forEach(track => {
-                        remoteStream.addTrack(track);
-                    })
-                }
-
-                peerConnection.onicecandidate = (event) => {
-                    if (event.candidate) {
-                        console.log("Sending Ice Candidates");
-
-                        socket.emit("signalingMessage", {
-                            room,
-                            message: JSON.stringify({
-                                type: "candidate",
-                                candidate: event.candidate
-                            })
-                        })
-                    }
-                }
-
-                peerConnection.onconnectionstatechange = () => {
-                    console.log("connection state change hui ", peerConnection.connectionState);
-                }
-            }
-
-            const handleSignalingMessage = async (message) => {
-                const { type, offer, answer, candidate } = JSON.parse(message);
-                if (type === "offer") handleOffer(offer);
-                if (type === "answer") handleAnswer(answer);
-                if (type === "candidate" && peerConnection) {
-                    try { await peerConnection.addIceCandidate(candidate); }
-                    catch (error) {
-                        console.log(error);
-                    }
-                }
-                if (type === "hangup") {
-                    hangup();
-                }
-            }
-
-            const handleOffer = async (offer) => {
-                await createPeerConnection();
-                try {
-                    await peerConnection.setRemoteDescription(offer);
-                    const answer = await peerConnection.createAnswer();
-                    await peerConnection.setLocalDescription(answer);
-                    socket.emit("signalingMessage", { room, message: JSON.stringify({ type: "answer", answer }) });
-                    inCall = true;
-                }
-                catch (error) {
-                    console.log("failed to handle offer");
-                }
-            }
-
-            const handleAnswer = async (answer) => {
-                try {
-                    await peerConnection.setRemoteDescription(answer);
-                }
-                catch (error) {
-                    console.log("failed to handle answer");
-                }
-            }
-
-
-            document.querySelector("#video-call-btn")
-                .addEventListener("click", function () {
-                    socket.emit("startVideoCall", { room })
-                })
-
-            socket.on("incomingCall", function () {
-                console.log("hey");
-                document.querySelector("#incoming-call").classList.remove("hidden");
+const initiateOffer = async () => {
+    await createPeerConnection();
+    try {
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+        console.log("Sending offer: ", offer);
+        socket.emit("signalingMessage", {
+            room,
+            message: JSON.stringify({
+                type: "offer",
+                offer
             })
+        });
+    } catch (err) {
+        console.error("Error creating offer: ", err);
+    }
+}
 
-            socket.on("callAccepted", function () {
-                initialize();
-                document.querySelector(".videoblock").classList.remove("hidden");
-            })
+const createPeerConnection = () => {
+    peerConnection = new RTCPeerConnection(rtcSettings);
 
-            document.querySelector("#accept-call")
-                .addEventListener("click", function () {
-                    document.querySelector("#incoming-call").classList.add("hidden");
-                    initialize();
-                    document.querySelector(".videoblock").classList.remove("hidden");
-                    socket.emit("acceptCall", { room })
+    remoteStream = new MediaStream();
+
+    document.querySelector("#remoteVideo").srcObject = remoteStream;
+    document.querySelector("#remoteVideo").style.display = "block";
+    document.querySelector("#localVideo").classList.add("smallFrame");
+
+    localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream);
+    });
+
+    peerConnection.ontrack = (event) => {
+        event.streams[0].getTracks().forEach(track => {
+            remoteStream.addTrack(track);
+        });
+    };
+
+    peerConnection.onicecandidate = (event) => {
+        if (event.candidate) {
+            console.log("Sending ICE candidate: ", event.candidate);
+            socket.emit("signalingMessage", {
+                room,
+                message: JSON.stringify({
+                    type: "candidate",
+                    candidate: event.candidate
                 })
-
-            document.querySelector("#reject-call")
-                .addEventListener("click", function () {
-                    document.querySelector("#incoming-call").classList.add("hidden");
-                    socket.emit("rejectCall", { room })
-                })
-
-            socket.on("callRejected", function () {
-                alert("Call rejected by other user");
-            })
-
-            document.querySelector("#hangup")
-                .addEventListener("click", function () {
-                    hangup();
-                })
-
-            function hangup() {
-                if (peerConnection) {
-                    peerConnection.close();
-                    peerConnection = null;
-                    localStream.getTracks().forEach(track => track.stop());
-
-                    document.querySelector(".videoblock").classList.add("hidden");
-                    socket.emit("signalingMessage", { room, message: JSON.stringify({ type: "hangup" }) });
-                    inCall = false;
-                }
-            }
-            let isFrontCamera = true;
-            let audioTrack; // Variable to store the audio track separately
-
-            document.querySelector("#toggleCamera").addEventListener("click", async function () {
-                isFrontCamera = !isFrontCamera;
-                await switchCamera();
             });
+        }
+    };
 
-            async function switchCamera() {
-                const videoConstraints = {
-                    video: {
-                        facingMode: isFrontCamera ? 'user' : 'environment'
-                    }
-                };
+    peerConnection.onconnectionstatechange = () => {
+        console.log("Connection state changed: ", peerConnection.connectionState);
+    };
+}
 
-                // Preserve the audio track if it exists
-                if (localStream && localStream.getAudioTracks().length > 0) {
-                    audioTrack = localStream.getAudioTracks()[0];
-                }
+const handleSignalingMessage = async (message) => {
+    const { type, offer, answer, candidate } = JSON.parse(message);
+    console.log("Received signaling message: ", message);
+    if (type === "offer") handleOffer(offer);
+    if (type === "answer") handleAnswer(answer);
+    if (type === "candidate" && peerConnection) {
+        try { await peerConnection.addIceCandidate(candidate); }
+        catch (error) {
+            console.error("Error adding ICE candidate: ", error);
+        }
+    }
+    if (type === "hangup") {
+        hangup();
+    }
+}
 
-                // Stop only the video tracks
-                if (localStream) {
-                    localStream.getVideoTracks().forEach(track => track.stop());
-                }
+const handleOffer = async (offer) => {
+    await createPeerConnection();
+    try {
+        await peerConnection.setRemoteDescription(offer);
+        const answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+        console.log("Sending answer: ", answer);
+        socket.emit("signalingMessage", { room, message: JSON.stringify({ type: "answer", answer }) });
+        inCall = true;
+    } catch (error) {
+        console.error("Error handling offer: ", error);
+    }
+}
 
-                try {
-                    // Get the new video track
-                    const newStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
-                    const videoTrack = newStream.getVideoTracks()[0];
+const handleAnswer = async (answer) => {
+    try {
+        await peerConnection.setRemoteDescription(answer);
+        console.log("Remote description set: ", answer);
+    } catch (error) {
+        console.error("Error handling answer: ", error);
+    }
+}
 
-                    // If an audio track already exists, add it to the new stream
-                    if (audioTrack) {
-                        localStream = new MediaStream([videoTrack, audioTrack]);
-                    } else {
-                        localStream = newStream;
-                    }
+document.querySelector("#video-call-btn")
+    .addEventListener("click", function () {
+        socket.emit("startVideoCall", { room });
+    });
 
-                    document.querySelector("#localVideo").srcObject = localStream;
+socket.on("incomingCall", function () {
+    console.log("Incoming call");
+    document.querySelector("#incoming-call").classList.remove("hidden");
+});
 
-                    // Replace the video track in the peer connection if in call
-                    if (inCall && peerConnection) {
-                        const sender = peerConnection.getSenders().find(s => s.track.kind === videoTrack.kind);
-                        sender.replaceTrack(videoTrack);
-                    }
-                } catch (err) {
-                    console.log("Error switching camera: ", err);
-                }
-            }
+socket.on("callAccepted", function () {
+    initialize();
+    document.querySelector(".videoblock").classList.remove("hidden");
+});
+
+document.querySelector("#accept-call")
+    .addEventListener("click", function () {
+        document.querySelector("#incoming-call").classList.add("hidden");
+        initialize();
+        document.querySelector(".videoblock").classList.remove("hidden");
+        socket.emit("acceptCall", { room });
+    });
+
+document.querySelector("#reject-call")
+    .addEventListener("click", function () {
+        document.querySelector("#incoming-call").classList.add("hidden");
+        socket.emit("rejectCall", { room });
+    });
+
+socket.on("callRejected", function () {
+    alert("Call rejected by other user");
+});
+
+document.querySelector("#hangup")
+    .addEventListener("click", function () {
+        hangup();
+    });
+
+function hangup() {
+    if (peerConnection) {
+        peerConnection.close();
+        peerConnection = null;
+        localStream.getTracks().forEach(track => track.stop());
+
+        document.querySelector(".videoblock").classList.add("hidden");
+        socket.emit("signalingMessage", { room, message: JSON.stringify({ type: "hangup" }) });
+        inCall = false;
+    }
+}
+
+let isFrontCamera = true;
+let audioTrack;
+
+document.querySelector("#toggleCamera").addEventListener("click", async function () {
+    isFrontCamera = !isFrontCamera;
+    await switchCamera();
+});
+
+async function switchCamera() {
+    const videoConstraints = {
+        video: {
+            facingMode: isFrontCamera ? 'user' : 'environment'
+        }
+    };
+
+    if (localStream && localStream.getAudioTracks().length > 0) {
+        audioTrack = localStream.getAudioTracks()[0];
+    }
+
+    if (localStream) {
+        localStream.getVideoTracks().forEach(track => track.stop());
+    }
+
+    try {
+        const newStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
+        const videoTrack = newStream.getVideoTracks()[0];
+
+        if (audioTrack) {
+            localStream = new MediaStream([videoTrack, audioTrack]);
+        } else {
+            localStream = newStream;
+        }
+
+        document.querySelector("#localVideo").srcObject = localStream;
+
+        if (inCall && peerConnection) {
+            const sender = peerConnection.getSenders().find(s => s.track.kind === videoTrack.kind);
+            sender.replaceTrack(videoTrack);
+        }
+    } catch (err) {
+        console.error("Error switching camera: ", err);
+    }
+}
+
 
 
 
