@@ -13,29 +13,117 @@
         }
 
         #videos {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            background-color: #000;
+            position: relative;
         }
-
 
         .video-player {
             background-color: black;
-            /* transform: scaleX(-1); */
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Changed from cover to contain to show full video */
+            object-position: center;
+        }
+
+        /* Ensure videos maintain aspect ratio */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        #remoteVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #localVideo {
+            position: absolute;
+            z-index: 2;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            object-fit: cover; /* Local video can be cropped to fit the small frame */
         }
 
         .smallFrame {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            height: 170px;
-            width: 300px;
-            border-radius: 6px;
-            z-index: 10;
+            /* Mobile-first approach */
+            bottom: 120px;
+            right: 15px;
+            height: 150px;
+            width: 110px;
+        }
+
+        /* Tablet styles */
+        @media screen and (min-width: 601px) and (max-width: 1024px) {
+            .smallFrame {
+                height: 200px;
+                width: 150px;
+                bottom: 120px;
+                right: 20px;
+            }
+            
+            .control-container {
+                height: 70px;
+                width: 70px;
+            }
+        }
+
+        /* Desktop styles */
+        @media screen and (min-width: 1025px) {
+            .smallFrame {
+                height: 240px;
+                width: 180px;
+                bottom: 120px;
+                right: 30px;
+            }
+            
+            .control-container {
+                height: 70px;
+                width: 70px;
+            }
+        }
+
+        /* Landscape mode adjustments */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            .smallFrame {
+                height: 120px;
+                width: 90px;
+                bottom: 80px;
+                right: 10px;
+            }
+            
+            #controls {
+                bottom: 10px;
+                gap: 0.5em;
+            }
+            
+            .control-container {
+                height: 50px;
+                width: 50px;
+            }
+        }
+
+        /* Ultra-wide desktop screens */
+        @media screen and (min-width: 1440px) {
+            .smallFrame {
+                height: 280px;
+                width: 210px;
+                bottom: 140px;
+                right: 40px;
+            }
         }
 
         #controls {
@@ -45,37 +133,62 @@
             transform: translateX(-50%);
             display: flex;
             gap: 1em;
+            z-index: 3;
         }
 
         .control-container {
             background-color: #ffffff;
-            height: 80px;
-            width: 80px;
+            height: 60px;
+            width: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .control-container:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .control-container svg {
-            height: 100%;
-            width: 100%;
+            height: 24px;
+            width: 24px;
         }
 
         #leave-btn {
             background-color: rgb(255, 80, 80, 1);
         }
 
+        #leave-btn:hover {
+            background-color: rgb(255, 60, 60, 1);
+        }
+
+        /* Mobile styles (up to 600px) */
         @media screen and (max-width: 600px) {
             .smallFrame {
-                height: 80px;
-                width: 120px;
+                height: 120px;
+                width: 90px;
+                bottom: 100px;
+                right: 10px;
             }
 
-            .control-container img {
+            .control-container {
+                height: 50px;
+                width: 50px;
+            }
+            
+            .control-container svg {
                 height: 20px;
                 width: 20px;
+            }
+            
+            #controls {
+                bottom: 15px;
+                gap: 0.8em;
             }
         }
     </style>
@@ -84,10 +197,12 @@
 
 <body class="flex flex-col h-dvh bg-gray-200">
     <%- include('partials/header') %>
-        <div class="fixed videoblock hidden  z-[222] w-full h-svh">
+        <div class="fixed videoblock hidden z-[222] w-full h-svh">
             <div id="videos">
-                <video class="video-player" id="localVideo" autoplay muted playsinline></video>
-                <video class="video-player" id="remoteVideo" autoplay playsinline></video>
+                <div class="video-container">
+                    <video class="video-player" id="remoteVideo" autoplay playsinline></video>
+                    <video class="video-player" id="localVideo" autoplay muted playsinline></video>
+                </div>
             </div>
             <div id="controls">
                 <!-- <div class="control-container" id="cameraButton">
@@ -199,11 +314,13 @@
             </div>
         </div>
         <div id="incoming-call"
-            class="fixed hidden z-[222] w-full h-dvh bg-gray-900 bg-opacity-75 flex items-center justify-center">
-            <div class="bg-white p-8 rounded-md text-center">
-                <p class="mb-4">Incoming Call...</p>
-                <button id="accept-call" class="bg-green-500 text-white py-2 px-4 rounded-md">Accept</button>
-                <button id="reject-call" class="bg-red-500 text-white py-2 px-4 rounded-md ml-2">Reject</button>
+            class="fixed hidden z-[222] w-full h-dvh bg-gray-900 bg-opacity-75">
+            <div class="flex items-center justify-center h-full">
+                <div class="bg-white p-8 rounded-md text-center">
+                    <p class="mb-4">Incoming Call...</p>
+                    <button id="accept-call" class="bg-green-500 text-white py-2 px-4 rounded-md">Accept</button>
+                    <button id="reject-call" class="bg-red-500 text-white py-2 px-4 rounded-md ml-2">Reject</button>
+                </div>
             </div>
         </div>
         <main class="flex-1 p-4 overflow-y-auto relative" id="message-container">
@@ -216,13 +333,15 @@
                 You will be connected shortly. 👋👋👋👋
             </div>
         </main>
-        <form id="chatform" class="bg-white p-4 flex">
+        <form id="chatform" class="bg-white p-4 hidden">
             <input type="hidden" id="userid" value="">
-            <input type="text" id="messagebox"
-                class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Type a message">
-            <button type="submit"
-                class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Send</button>
+            <div class="flex">
+                <input type="text" id="messagebox"
+                    class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Type a message">
+                <button type="submit"
+                    class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Send</button>
+            </div>
         </form>
         <video id="local-video" class="hidden" autoplay></video>
         <video id="remote-video" class="hidden" autoplay></video>
@@ -246,9 +365,16 @@
                 document.querySelector(".nobody").classList.add("hidden");
                 document.querySelector(".information").textContent = "Connected to  " + room;
                 document.querySelector(".videocall").classList.remove("hidden");
+                document.querySelector("#chatform").classList.remove("hidden");
             });
             socket.on("userDisconnected", function (data) {
                 if (data.userId !== socket.id) {
+                    // Reset video call button if user was in calling state
+                    resetVideoCallButton();
+                    
+                    // Hide chat form when user disconnects
+                    document.querySelector("#chatform").classList.add("hidden");
+                    
                     alert("The other user has disconnected. We will connect you to a new user.");
                     setTimeout(function () {
                         location.reload(); // Refresh the page
@@ -269,8 +395,15 @@
 
             chatform.addEventListener("submit", function (event) {
                 event.preventDefault();
-                socket.emit("message", { room: room, message: messagebox.value });
-                attachMessage(messagebox.value);
+                
+                // Trim whitespace and check if message is not empty
+                const message = messagebox.value.trim();
+                if (message === "") {
+                    return; // Don't send empty messages
+                }
+                
+                socket.emit("message", { room: room, message: message });
+                attachMessage(message);
                 messagebox.value = "";
             })
 
@@ -312,9 +445,10 @@
             }
 
             let localStream;
-let remoteStream;
-let peerConnection;
-let inCall = false;
+            let remoteStream;
+            let peerConnection;
+            let inCall = false;
+            let isInitiator = false; // Track who initiated the call
 
 const rtcSettings = {
     iceServers: [
@@ -327,8 +461,12 @@ const rtcSettings = {
     ]
 };
 
-const initialize = async () => {
-    socket.on("signalingMessage", handleSignalingMessage);
+const initialize = async (initiator = false) => {
+    if (!socket.hasListeners('signalingMessage')) {
+        socket.on("signalingMessage", handleSignalingMessage);
+    }
+    
+    isInitiator = initiator;
 
     try {
         localStream = await navigator.mediaDevices.getUserMedia({
@@ -337,8 +475,15 @@ const initialize = async () => {
         });
         document.querySelector("#localVideo").srcObject = localStream;
         document.querySelector("#localVideo").style.display = "block";
+        
+        // Set up initial video layout
+        setTimeout(() => handleVideoLayout(), 100); // Small delay to ensure video is ready
 
-        initiateOffer();
+        // Only initiator creates offer
+        if (isInitiator) {
+            await createPeerConnection();
+            initiateOffer();
+        }
 
         inCall = true;
     } catch (err) {
@@ -346,8 +491,86 @@ const initialize = async () => {
     }
 }
 
+// Function to handle video aspect ratios and responsiveness
+const handleVideoLayout = () => {
+    const remoteVideo = document.querySelector("#remoteVideo");
+    const localVideo = document.querySelector("#localVideo");
+    
+    if (remoteVideo && localVideo) {
+        // Add event listeners for when video metadata is loaded
+        remoteVideo.addEventListener('loadedmetadata', () => {
+            adjustVideoLayout(remoteVideo, localVideo);
+        });
+        
+        localVideo.addEventListener('loadedmetadata', () => {
+            adjustVideoLayout(remoteVideo, localVideo);
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            adjustVideoLayout(remoteVideo, localVideo);
+        });
+    }
+};
+
+const adjustVideoLayout = (remoteVideo, localVideo) => {
+    const container = document.querySelector('#videos');
+    if (!container || !remoteVideo || !localVideo) return;
+    
+    const containerAspectRatio = container.clientWidth / container.clientHeight;
+    const remoteVideoAspectRatio = remoteVideo.videoWidth / remoteVideo.videoHeight;
+    
+    // Adjust remote video to fit container while maintaining aspect ratio
+    if (remoteVideoAspectRatio && !isNaN(remoteVideoAspectRatio)) {
+        if (remoteVideoAspectRatio > containerAspectRatio) {
+            // Video is wider than container
+            remoteVideo.style.width = '100%';
+            remoteVideo.style.height = 'auto';
+        } else {
+            // Video is taller than container
+            remoteVideo.style.width = 'auto';
+            remoteVideo.style.height = '100%';
+        }
+        remoteVideo.style.objectFit = 'contain';
+        remoteVideo.style.objectPosition = 'center';
+    }
+    
+    // Position local video appropriately based on screen size
+    const isMobile = window.innerWidth <= 600;
+    const isTablet = window.innerWidth > 600 && window.innerWidth <= 1024;
+    
+    if (isMobile) {
+        localVideo.classList.add('smallFrame');
+        localVideo.style.bottom = '100px';
+        localVideo.style.right = '10px';
+        localVideo.style.width = '90px';
+        localVideo.style.height = '120px';
+    } else if (isTablet) {
+        localVideo.classList.add('smallFrame');
+        localVideo.style.bottom = '120px';
+        localVideo.style.right = '20px';
+        localVideo.style.width = '150px';
+        localVideo.style.height = '200px';
+    } else {
+        localVideo.classList.add('smallFrame');
+        localVideo.style.bottom = '120px';
+        localVideo.style.right = '30px';
+        localVideo.style.width = '180px';
+        localVideo.style.height = '240px';
+    }
+};
+
 const initiateOffer = async () => {
-    await createPeerConnection();
+    if (!peerConnection) {
+        console.error("Peer connection not initialized");
+        return;
+    }
+    
+    if (peerConnection.signalingState !== 'stable') {
+        console.log("Peer connection not in stable state, current state:", peerConnection.signalingState);
+        return;
+    }
+
     try {
         const offer = await peerConnection.createOffer();
         await peerConnection.setLocalDescription(offer);
@@ -365,6 +588,11 @@ const initiateOffer = async () => {
 }
 
 const createPeerConnection = () => {
+    if (peerConnection) {
+        console.log("Peer connection already exists");
+        return;
+    }
+
     peerConnection = new RTCPeerConnection(rtcSettings);
 
     remoteStream = new MediaStream();
@@ -372,10 +600,15 @@ const createPeerConnection = () => {
     document.querySelector("#remoteVideo").srcObject = remoteStream;
     document.querySelector("#remoteVideo").style.display = "block";
     document.querySelector("#localVideo").classList.add("smallFrame");
+    
+    // Set up video layout handling
+    handleVideoLayout();
 
-    localStream.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localStream);
-    });
+    if (localStream) {
+        localStream.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localStream);
+        });
+    }
 
     peerConnection.ontrack = (event) => {
         event.streams[0].getTracks().forEach(track => {
@@ -398,29 +631,77 @@ const createPeerConnection = () => {
 
     peerConnection.onconnectionstatechange = () => {
         console.log("Connection state changed: ", peerConnection.connectionState);
+        
+        if (peerConnection.connectionState === 'failed') {
+            console.log("Connection failed, attempting to restart ICE");
+            peerConnection.restartIce();
+        }
+    };
+
+    peerConnection.onicegatheringstatechange = () => {
+        console.log("ICE gathering state: ", peerConnection.iceGatheringState);
+    };
+
+    peerConnection.oniceconnectionstatechange = () => {
+        console.log("ICE connection state: ", peerConnection.iceConnectionState);
     };
 }
 
 const handleSignalingMessage = async (message) => {
     const { type, offer, answer, candidate } = JSON.parse(message);
     console.log("Received signaling message: ", message);
-    if (type === "offer") handleOffer(offer);
-    if (type === "answer") handleAnswer(answer);
-    if (type === "candidate" && peerConnection) {
-        try { await peerConnection.addIceCandidate(candidate); }
-        catch (error) {
-            console.error("Error adding ICE candidate: ", error);
+    
+    try {
+        if (type === "offer") {
+            await handleOffer(offer);
+        } else if (type === "answer") {
+            await handleAnswer(answer);
+        } else if (type === "candidate" && peerConnection) {
+            if (peerConnection.remoteDescription) {
+                await peerConnection.addIceCandidate(candidate);
+            } else {
+                // Store candidates if remote description isn't set yet
+                if (!window.pendingCandidates) window.pendingCandidates = [];
+                window.pendingCandidates.push(candidate);
+            }
+        } else if (type === "hangup") {
+            hangup();
         }
-    }
-    if (type === "hangup") {
-        hangup();
+    } catch (error) {
+        console.error("Error handling signaling message: ", error);
     }
 }
 
 const handleOffer = async (offer) => {
-    await createPeerConnection();
+    console.log("Handling offer, current signaling state:", peerConnection?.signalingState);
+    
+    // Create peer connection if it doesn't exist
+    if (!peerConnection) {
+        await createPeerConnection();
+    }
+    
+    // Check if we're in the right state to handle an offer
+    if (peerConnection.signalingState !== 'stable' && peerConnection.signalingState !== 'have-local-offer') {
+        console.log("Cannot handle offer in current state:", peerConnection.signalingState);
+        return;
+    }
+    
     try {
         await peerConnection.setRemoteDescription(offer);
+        console.log("Remote description set successfully");
+        
+        // Process any pending candidates
+        if (window.pendingCandidates && window.pendingCandidates.length > 0) {
+            for (const candidate of window.pendingCandidates) {
+                try {
+                    await peerConnection.addIceCandidate(candidate);
+                } catch (err) {
+                    console.error("Error adding pending candidate:", err);
+                }
+            }
+            window.pendingCandidates = [];
+        }
+        
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
         console.log("Sending answer: ", answer);
@@ -428,20 +709,72 @@ const handleOffer = async (offer) => {
         inCall = true;
     } catch (error) {
         console.error("Error handling offer: ", error);
+        // If we get an InvalidStateError, try to reset the connection
+        if (error.name === 'InvalidStateError') {
+            console.log("Resetting peer connection due to invalid state");
+            resetPeerConnection();
+        }
     }
 }
 
 const handleAnswer = async (answer) => {
+    if (!peerConnection) {
+        console.error("No peer connection to handle answer");
+        return;
+    }
+    
+    if (peerConnection.signalingState !== 'have-local-offer') {
+        console.log("Cannot handle answer in current state:", peerConnection.signalingState);
+        return;
+    }
+    
     try {
         await peerConnection.setRemoteDescription(answer);
         console.log("Remote description set: ", answer);
+        
+        // Process any pending candidates
+        if (window.pendingCandidates && window.pendingCandidates.length > 0) {
+            for (const candidate of window.pendingCandidates) {
+                try {
+                    await peerConnection.addIceCandidate(candidate);
+                } catch (err) {
+                    console.error("Error adding pending candidate:", err);
+                }
+            }
+            window.pendingCandidates = [];
+        }
     } catch (error) {
         console.error("Error handling answer: ", error);
+        if (error.name === 'InvalidStateError') {
+            console.log("Resetting peer connection due to invalid state");
+            resetPeerConnection();
+        }
     }
+}
+
+const resetPeerConnection = () => {
+    if (peerConnection) {
+        peerConnection.close();
+        peerConnection = null;
+    }
+    window.pendingCandidates = [];
+    inCall = false;
 }
 
 document.querySelector("#video-call-btn")
     .addEventListener("click", function () {
+        const videoCallBtn = document.querySelector("#video-call-btn");
+        const chatForm = document.querySelector("#chatform");
+        
+        // Change button state to calling
+        videoCallBtn.textContent = "Calling...";
+        videoCallBtn.disabled = true;
+        videoCallBtn.classList.add("opacity-50", "cursor-not-allowed");
+        videoCallBtn.classList.remove("hover:bg-blue-600");
+        
+        // Hide chat input box
+        chatForm.classList.add("hidden");
+        
         socket.emit("startVideoCall", { room });
     });
 
@@ -451,14 +784,21 @@ socket.on("incomingCall", function () {
 });
 
 socket.on("callAccepted", function () {
-    initialize();
+    const chatForm = document.querySelector("#chatform");
+    chatForm.classList.add("hidden"); // Hide input during call
+    
+    initialize(true); // Caller becomes initiator
     document.querySelector(".videoblock").classList.remove("hidden");
 });
 
 document.querySelector("#accept-call")
     .addEventListener("click", function () {
+        const chatForm = document.querySelector("#chatform");
+        
         document.querySelector("#incoming-call").classList.add("hidden");
-        initialize();
+        chatForm.classList.add("hidden"); // Hide input during call
+        
+        initialize(false); // Callee is not initiator
         document.querySelector(".videoblock").classList.remove("hidden");
         socket.emit("acceptCall", { room });
     });
@@ -471,7 +811,24 @@ document.querySelector("#reject-call")
 
 socket.on("callRejected", function () {
     alert("Call rejected by other user");
+    resetVideoCallButton();
 });
+
+function resetVideoCallButton() {
+    const videoCallBtn = document.querySelector("#video-call-btn");
+    const chatForm = document.querySelector("#chatform");
+    
+    // Reset button state
+    videoCallBtn.textContent = "Video Call";
+    videoCallBtn.disabled = false;
+    videoCallBtn.classList.remove("opacity-50", "cursor-not-allowed");
+    videoCallBtn.classList.add("hover:bg-blue-600");
+    
+    // Only show chat input box if connected to someone
+    if (room) {
+        chatForm.classList.remove("hidden");
+    }
+}
 
 document.querySelector("#hangup")
     .addEventListener("click", function () {
@@ -482,12 +839,28 @@ function hangup() {
     if (peerConnection) {
         peerConnection.close();
         peerConnection = null;
-        localStream.getTracks().forEach(track => track.stop());
-
-        document.querySelector(".videoblock").classList.add("hidden");
-        socket.emit("signalingMessage", { room, message: JSON.stringify({ type: "hangup" }) });
-        inCall = false;
     }
+    
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+        localStream = null;
+    }
+
+    document.querySelector(".videoblock").classList.add("hidden");
+    document.querySelector("#localVideo").classList.remove("smallFrame");
+    
+    // Clear pending candidates
+    window.pendingCandidates = [];
+    
+    if (inCall) {
+        socket.emit("signalingMessage", { room, message: JSON.stringify({ type: "hangup" }) });
+    }
+    
+    // Reset video call button and show chat input
+    resetVideoCallButton();
+    
+    inCall = false;
+    isInitiator = false;
 }
 
 let isFrontCamera = true;
@@ -499,35 +872,47 @@ document.querySelector("#toggleCamera").addEventListener("click", async function
 });
 
 async function switchCamera() {
+    if (!localStream) {
+        console.error("No local stream available");
+        return;
+    }
+
     const videoConstraints = {
+        audio: true,
         video: {
             facingMode: isFrontCamera ? 'user' : 'environment'
         }
     };
 
-    if (localStream && localStream.getAudioTracks().length > 0) {
-        audioTrack = localStream.getAudioTracks()[0];
-    }
-
-    if (localStream) {
-        localStream.getVideoTracks().forEach(track => track.stop());
-    }
-
     try {
-        const newStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
-        const videoTrack = newStream.getVideoTracks()[0];
+        // Stop current video track
+        const videoTrack = localStream.getVideoTracks()[0];
+        if (videoTrack) {
+            videoTrack.stop();
+        }
 
+        // Get new stream with switched camera
+        const newStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
+        const newVideoTrack = newStream.getVideoTracks()[0];
+        const audioTrack = localStream.getAudioTracks()[0];
+
+        // Create new stream with new video track and existing audio
         if (audioTrack) {
-            localStream = new MediaStream([videoTrack, audioTrack]);
+            localStream = new MediaStream([newVideoTrack, audioTrack]);
         } else {
             localStream = newStream;
         }
 
         document.querySelector("#localVideo").srcObject = localStream;
 
+        // Update the peer connection with new video track
         if (inCall && peerConnection) {
-            const sender = peerConnection.getSenders().find(s => s.track.kind === videoTrack.kind);
-            sender.replaceTrack(videoTrack);
+            const sender = peerConnection.getSenders().find(s => 
+                s.track && s.track.kind === 'video'
+            );
+            if (sender) {
+                await sender.replaceTrack(newVideoTrack);
+            }
         }
     } catch (err) {
         console.error("Error switching camera: ", err);

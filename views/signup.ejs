@@ -132,8 +132,8 @@
                         placeholder="Enter Your Roll Number"
                         id="rollNumber"
                         name="rollNumber"
-                        pattern="\d{9}"
-                        title="Roll number must be 9 digits"
+                        pattern="\d{9,}"
+                        title="Roll number must be 9 or more digits"
                         required
                       />
                     </div>
@@ -251,8 +251,8 @@
         const rollNumber = document.getElementById('rollNumber').value;
         const phoneNumber = document.getElementById('phoneNumber').value;
         
-        if (rollNumber.length !== 9) {
-          alert('Roll number must be exactly 9 digits');
+        if (rollNumber.length < 9) {
+          alert('Roll number must be at least 9 digits');
           return false;
         }
 
